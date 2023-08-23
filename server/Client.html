@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    Client is this one
+    <form
+      onsubmit="handleSubmit(event)"
+      method="post"
+      action="http://localhost:4001/api/users"
+    >
+      <!-- userName, firstName, lastName, email, password  -->
+      <input name="userName" placeholder="User Name" type="text" /><br /><br />
+      <input
+        name="firstName"
+        placeholder="First Name"
+        type="text"
+      /><br /><br />
+      <input name="lastName" placeholder="Last Name" type="text" /><br /><br />
+      <input name="email" placeholder="Email" type="text" /><br /><br />
+      <input name="password" placeholder="Password" type="text" /><br /><br />
+      <button type="submit">submit</button><br />
+    </form>
+    <br /><br /><br /><br />
+    <button onclick="handleGet(event)">Get Data</button>
+  </body>
+  <script>
+    let handleGet = (e) => {
+      e.preventDefault();
+
+      fetch("http://localhost:4001/api/users/all", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify({
+        // userName: document.getElementsByName("userName")[0].value,
+        // firstName: document.getElementsByName("firstName")[0].value,
+        // lastName: document.getElementsByName("lastName")[0].value,
+        // email: document.getElementsByName("email")[0].value,
+        // password: document.getElementsByName("password")[0].value,
+        // }),
+      })
+        .then((result) => {
+          console.log(result);
+          return result.json();
+        })
+        .then((data) => {
+          return data.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    };
+    console.log("object");
+    let handleSubmit = (e) => {
+      e.preventDefault();
+      fetch("http://localhost:4001/api/users", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userName: document.getElementsByName("userName")[0].value,
+          firstName: document.getElementsByName("firstName")[0].value,
+          lastName: document.getElementsByName("lastName")[0].value,
+          email: document.getElementsByName("email")[0].value,
+          password: document.getElementsByName("password")[0].value,
+        }),
+      })
+        .then((result) => {
+          console.log(result);
+          return result.json();
+        })
+        .then((data) => {
+          console.log(data);
+        })
+        .catch((err) => {
+          console.log(error);
+        });
+    };
+  </script>
+</html>
